@@ -2,7 +2,7 @@
 
 /**
  *  Copyright (c) 2024
- *  @Version    : 1.0.0
+ *  @Version    : 1.0.1
  *  @Repository : https://github.com/salarizadi/php_watermark
  *  @Author     : https://salarizadi.github.io
  */
@@ -109,22 +109,23 @@ class WaterMark {
     }
 
     /**
-     * Exports the watermarked image to a file.
+     * Exports the watermarked image to a file in the specified format.
      *
-     * @param string $filename The base name of the file to be saved (default: 'watermarked').
-     * @param string $format The format to export the image (default: 'jpg').
-     * @return bool True on success, false on failure.
+     * @param string $filename The name of the file to be saved without extension (default: 'watermarked').
+     * @param string $format The format to export the image ('jpg', 'jpeg', or 'png'). Default is 'jpg'.
+     * @param int $quality The quality of the exported image (1-100 for JPEG, 0-9 for PNG). Default is 100 for JPEG.
+     * @return bool True if the image is successfully exported, false otherwise.
      */
-    public function export (string $filename = 'watermarked', string $format = 'jpg'): bool {
+    public function export (string $filename = 'watermarked', string $format = 'jpg', int $quality = 100): bool {
         $export = false; // Initialize export flag
 
         switch ($format) {
             case 'jpg':
             case 'jpeg':
-                $export = imagejpeg($this->outPic, "$filename.jpg", 100); // Export as JPEG
+                $export = imagejpeg($this->outPic, "$filename.jpg", $quality); // Export as JPEG
                 break;
             case 'png':
-                $export = imagepng($this->outPic, "$filename.png", 0); // Export as PNG
+                $export = imagepng($this->outPic, "$filename.png", $quality); // Export as PNG
         }
 
         return $export; // Return the export result
