@@ -75,12 +75,17 @@ $wm->pasteText('Sample Text', [
 After applying the watermark or text, you can export the final image using the `export` method:
 
 ```php
-$wm->export('output_image', 'jpg');
+$wm->export('output_image', 'jpg', 90);
 ```
 
 **Parameters:**
 - `filename` (string): Name of the output file (without the extension).
-- `format` (string): File format, either `'jpg'` or `'png'`.
+- `format` (string): File format, either `'jpg'`, `'jpeg'`, or `'png'`. Default is `'jpg'`.
+- `quality` (int): The quality of the exported image:
+  - For JPEG: Value ranges from `1` to `100` (default is `100`).
+  - For PNG: Value ranges from `0` (no compression) to `9` (maximum compression). Default is `0`.
+
+**Note:** The `quality` parameter is optional and only relevant to the selected format. JPEG uses values from 1 to 100 for quality, while PNG uses 0 to 9 for compression.
 
 ---
 
@@ -118,8 +123,8 @@ $wm->pasteText('Hello World', [
     'position' => [100, 300]
 ]);
 
-// Export the final watermarked image
-$wm->export('watermarked_image', 'jpg');
+// Export the final watermarked image with quality settings
+$wm->export('watermarked_image', 'jpg', 90);
 
 // Free up resources
 $wm->freeMemory();
