@@ -2,13 +2,13 @@
 
 /**
  *  Copyright (c) 2024
- *  @Version    : 1.0.1
+ *  @Version    : 1.0.2
  *  @Repository : https://github.com/salarizadi/php_watermark
  *  @Author     : https://salarizadi.github.io
  */
 
 class WaterMark {
-  
+
     private array $marks = []; // Array to hold watermark images
     private $outPic; // Output picture resource
     private $image; // Original image resource
@@ -62,13 +62,14 @@ class WaterMark {
         ];
 
         // Get the position for the watermark and apply it to the output image
-        list($x, $y) = $this->getMarkPosition($position, $new_wk_width, $new_wk_height);
+        list($x, $y) = $this->getMarkPosition($position, (int)$new_wk_width, (int)$new_wk_height);
         imagecopyresampled(
             $this->outPic, $mark,
-            $x, $y, 0, 0,
-            $new_wk_width, $new_wk_height,
+            (int)$x, (int)$y, 0, 0,
+            (int)$new_wk_width, (int)$new_wk_height,
             imagesx($mark), imagesy($mark)
         );
+
 
         return $this; // Return the instance for method chaining
     }
@@ -103,7 +104,11 @@ class WaterMark {
         }
 
         // Add the text to the output image
-        imagettftext($this->outPic, $fontSize, 0, $x, $y, $textColor, $fontPath, $text);
+        imagettftext(
+            $this->outPic, $fontSize, 0,
+            (int) $x, (int) $y, $textColor,
+            $fontPath, $text
+        );
 
         return $this; // Return the instance for method chaining
     }
@@ -279,5 +284,5 @@ class WaterMark {
         }
         return [0, 0, 0]; // Default to black if hex is invalid
     }
-  
+
 }
